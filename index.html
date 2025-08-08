@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TEBAA – Jeu Maîtrise d'œuvre</title>
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <header class="topbar">
@@ -40,7 +40,7 @@
             <option value="all">Tous (mixés)</option>
             <option value="phasage">Phasage (MOP & Chantier)</option>
             <option value="metiers">Métiers</option>
-            <option value="vocab">Vocabulaire / Lecture de plan</option>
+            <option value="vocab">Vocabulaire / Organisation</option>
           </select>
         </div>
       </div>
@@ -58,8 +58,8 @@
       <button id="start-btn" class="primary lg">Démarrer (Entrée)</button>
     </div>
 
-    <footer class="version">Version 2.1 — août 2025 (graphisme)</footer>
-    <p class="hint">💡 En local, si <code>data.json</code> est bloqué, le jeu passe automatiquement en <strong>mode hors-ligne</strong> (données intégrées).</p>
+    <footer class="version">Version 2.2 — août 2025 (fix)</footer>
+    <p class="hint">💡 En local, si <code>data.json</code> est bloqué, le jeu passe en <strong>mode hors-ligne</strong> (données intégrées).</p>
   </div>
 
   <div id="game-screen" class="screen hidden" aria-live="polite">
@@ -132,6 +132,6 @@
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="game.js?v=3"></script>
+  <script src="game.js?v=4"></script>
 </body>
 </html>

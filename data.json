@@ -8,13 +8,13 @@
     { "id": "L6", "type": "vocab", "prompt": "Place les éléments de signalisation et de sécurité.", "plan": "grille-10x6", "targets": [ {"label":"Accès camions","x":9,"y":3,"tolerance":1}, {"label":"Poste de secours","x":4,"y":2,"tolerance":1}, {"label":"Coffret électrique","x":6,"y":2,"tolerance":1}, {"label":"Benne à déchets","x":3,"y":5,"tolerance":1} ], "distractors": ["Zone soudure","Aire de lavage roues"], "explain": "Accès PL distincts, secours visible/accessible, coffret hors zone humide, déchets regroupés et balisés." },
     { "id": "L7", "type": "phasage_second_oeuvre", "prompt": "Ordonne un enchaînement type du second œuvre (logique générale).", "slots": ["Cloisons/Calepinage","Réseaux (CFO/CFA/Plomberie)","Menuiseries intérieures","Revêtements sols/murs","Peinture/Finitions"], "distractors": ["Charpente","Fondations"], "explain": "On ferme/structure, on passe les réseaux, on pose menuiseries, puis revêtements et finitions." },
     { "id": "L8", "type": "metiers", "prompt": "Associe travaux d'enveloppe et d'aménagement au métier.", "pairs": [ {"tache":"Charpente bois traditionnelle","metier":"Charpentier"}, {"tache":"Couverture tuiles","metier":"Couvreur"}, {"tache":"Pose menuiseries extérieures","metier":"Menuisier"}, {"tache":"Ragréage et sols souples","metier":"Solier-moquettiste"} ], "distractors": ["Ferrailleur","Plaquiste"], "explain": "Charpentier (structure), couvreur (étanchéité/tuile), menuisier (ouvrants), solier (supports/revêtements)." },
-    { "id": "L9", "type": "vocab", "prompt": "Place ces éléments d'organisation de chantier.", "plan": "grille-10x6", "targets": [ {"label":"Zone de levage","x":3,"y":1,"tolerance":1}, {"label":"Panneau EPI obligatoires","x":0,"y":3,"tolerance":1}, {"label":"Zone déchets triés","x":8,"y":5,"tolerance":1}, {"label":"Poste de commandement/chef de chantier","x":5,"y":0,"tolerance":1} ], "distractors": ["Zone fumeurs","Aire pique-nique"], "explain": "Levage dégagé, EPI à l'entrée, tri en zone dédiée, point de commandement visible." },
+    { "id": "L9", "type": "vocab", "prompt": "Place ces éléments d'organisation de chantier.", "plan": "grille-10x6", "targets": [ {"label":"Zone de levage","x":3,"y":1,"tolerance":1}, {"label":"Panneau EPI obligatoires","x":0,"y":3,"tolerance":1}, {"label":"Zone déchets triés","x":8,"y":5,"tolerance":1}, {"label":"Poste de commandement/chef de chantier","x":5,"y":0,"tolerance":1} ], "distractors": ["Zone fumeurs","Aire pique-nique"], "explain": "Levage dégagé, EPI à l'entrée, tri dédié, PC visible." },
     { "id": "L10", "type": "metiers", "prompt": "Associe ces rôles/contrôles aux bons acteurs.", "pairs": [ {"tache":"Coordination SPS","metier":"Coordinateur SPS"}, {"tache":"OPC (ordonnancement, pilotage, coordination)","metier":"OPC"}, {"tache":"Implantation et topographie","metier":"Géomètre-topographe"}, {"tache":"Contrôle de conformité du béton","metier":"Laboratoire (béton)"} ], "distractors": ["Chef de chantier","Conducteur de travaux"], "explain": "SPS (sécurité), OPC (planning/coordination), géomètre (implantations), labo (essais/contrôles)." }
   ],
   "settings": {
     "duration_seconds": 180,
-    "hints_enabled": false,
-    "hint_penalty": 0,
+    "hints_enabled": true,
+    "hint_penalty": 0.2,
     "skip_penalty": 0.5,
     "cards_per_game": 10,
     "classes": ["2EMNB", "1AA"],
