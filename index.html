@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maître d'œuvre – Jeu TEBAA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="start-screen" class="screen">
+    <h1>Maître d'œuvre – TEBAA</h1>
+    <p class="subtitle">Lecture de plan • Phasage • Métiers • Vocabulaire</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="form-row">
+          <label for="player-name">Nom / Prénom</label>
+          <input id="player-name" type="text" placeholder="Ex: Dupont Jeanne" />
+        </div>
+        <div class="form-row">
+          <label for="player-class">Classe</label>
+          <select id="player-class">
+            <option value="2EMNB">2EMNB</option>
+            <option value="1AA">1AA</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <fieldset class="fieldset">
+          <legend>Options</legend>
+          <label class="check"><input id="opt-eval" type="checkbox" checked> Mode évaluation (masque l'explication jusqu'à validation)</label>
+          <label class="check"><input id="opt-icons" type="checkbox" checked> Icônes SVG pour le vocabulaire</label>
+          <label class="check"><input id="opt-leader" type="checkbox" checked> Classement local (Top 10 par classe)</label>
+        </fieldset>
+      </div>
+    </div>
+
+    <button id="start-btn" class="primary">Démarrer la partie (3 min)</button>
+  </div>
+
+  <div id="game-screen" class="screen hidden" aria-live="polite">
+    <div id="hud">
+      <div><strong id="timer">⏱ 3:00</strong></div>
+      <div><strong id="score">Score : 0,0 / 20</strong></div>
+      <div><strong id="progress">Carte 0/10</strong></div>
+    </div>
+
+    <div id="prompt" class="card"></div>
+    <div id="game-area" class="game-area"></div>
+
+    <div id="controls" class="controls">
+      <button id="validate-btn" class="success" title="Corriger la carte">Valider</button>
+      <button id="skip-btn" class="ghost" title="Passer cette carte (−0,5)">Passer (−0,5)</button>
+    </div>
+
+    <div id="explain" class="explain" aria-live="polite"></div>
+  </div>
+
+  <div id="end-screen" class="screen hidden">
+    <h2>Résultat</h2>
+    <p id="final-score"></p>
+
+    <div class="actions">
+      <button id="download-csv" class="primary">Télécharger le CSV</button>
+      <button id="restart-btn" class="ghost">Rejouer</button>
+    </div>
+
+    <details class="details">
+      <summary>Détails de la session</summary>
+      <pre id="session-details"></pre>
+    </details>
+
+    <div id="leaderboard" class="leaderboard hidden">
+      <h3>Classement (Top 10 – <span id="lb-class"></span>)</h3>
+      <table>
+        <thead><tr><th>#</th><th>Nom</th><th>Score /20</th><th>Date</th></tr></thead>
+        <tbody id="lb-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
