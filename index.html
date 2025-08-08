@@ -3,23 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TEBAA – Jeu Maîtrise d'œuvre</title>
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <title>TEBAA – Plan de chantier (prototype)</title>
+  <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">TEBAA • Maître d'œuvre</div>
-    <div class="progressbar" aria-label="Progression">
-      <div id="progress-fill" class="progress"></div>
-    </div>
-    <div class="top-actions">
-      <button id="help-btn" class="ghost sm" title="Aide (Raccourcis)">? Aide</button>
-    </div>
+    <div class="brand">TEBAA • Plan de chantier</div>
+    <div class="progressbar" aria-label="Progression"><div id="progress-fill" class="progress"></div></div>
+    <div class="top-actions"><button id="help-btn" class="ghost sm">? Aide</button></div>
   </header>
 
   <div id="start-screen" class="screen">
-    <h1>Jeu d'apprentissage</h1>
-    <p class="subtitle">Lecture de plan • Phasage • Métiers • Vocabulaire</p>
+    <h1>Mode “Plan de chantier”</h1>
+    <p class="subtitle">Place les éléments sur le plan réel (zones de drop tolérantes).</p>
 
     <div class="grid-2">
       <div>
@@ -37,101 +33,81 @@
         <div class="form-row">
           <label for="exercise-type">Type d'exercice</label>
           <select id="exercise-type">
-            <option value="all">Tous (mixés)</option>
-            <option value="phasage">Phasage (MOP & Chantier)</option>
-            <option value="metiers">Métiers</option>
             <option value="vocab">Vocabulaire / Organisation</option>
+            <option value="phasage">Phasage</option>
+            <option value="metiers">Métiers</option>
+            <option value="all">Tous (mixés)</option>
           </select>
         </div>
       </div>
       <div>
         <fieldset class="fieldset">
           <legend>Options</legend>
-          <label class="check"><input id="opt-eval" type="checkbox" checked> Mode évaluation (explication après validation)</label>
-          <label class="check"><input id="opt-icons" type="checkbox" checked> Icônes SVG pour le vocabulaire</label>
-          <label class="check"><input id="opt-leader" type="checkbox" checked> Classement local (Top 10 par classe)</label>
+          <label class="check"><input id="opt-eval" type="checkbox" checked> Mode évaluation</label>
+          <label class="check"><input id="opt-icons" type="checkbox" checked> Icônes SVG sur les étiquettes</label>
+          <label class="check"><input id="opt-leader" type="checkbox" checked> Classement local</label>
         </fieldset>
       </div>
     </div>
 
     <div class="actions">
-      <button id="start-btn" class="primary lg">Démarrer (Entrée)</button>
+      <button id="start-btn" class="primary lg">Démarrer</button>
     </div>
 
-    <footer class="version">Version 2.2 — août 2025 (fix)</footer>
-    <p class="hint">💡 En local, si <code>data.json</code> est bloqué, le jeu passe en <strong>mode hors-ligne</strong> (données intégrées).</p>
+    <footer class="version">Version Plan v1 — août 2025</footer>
   </div>
 
-  <div id="game-screen" class="screen hidden" aria-live="polite">
+  <div id="game-screen" class="screen hidden">
     <div id="hud">
       <div class="hud-item"><strong id="timer">⏱ 3:00</strong></div>
       <div class="hud-item"><strong id="score">Score : 0,0 / 20</strong></div>
       <div class="hud-item"><strong id="progress">Carte 0/10</strong></div>
       <div class="hud-item">
         <label for="zoom-range">Zoom</label>
-        <input id="zoom-range" type="range" min="80" max="140" value="100" />
+        <input id="zoom-range" type="range" min="60" max="140" value="100" />
       </div>
     </div>
 
     <div id="prompt" class="card"></div>
-    <div id="rule-banner" class="rule-banner hidden" aria-live="polite"></div>
+    <div id="rule-banner" class="rule-banner hidden"></div>
 
     <div class="layout">
       <aside id="bank-side" class="side">
         <div id="checklist" class="checklist hidden">
           <h4>À placer</h4>
           <ul id="checklist-items"></ul>
-          <button id="hint-btn" class="ghost sm" title="Affiche brièvement des zones indicatives (−0,2 pt)">Indice (−0,2)</button>
+          <button id="hint-btn" class="ghost sm" title="Zones indicatives (−0,2 pt)">Indice (−0,2)</button>
         </div>
       </aside>
       <main id="game-area" class="game-area"></main>
     </div>
 
     <div id="controls" class="controls">
-      <button id="validate-btn" class="success" title="Corriger la carte" disabled>Valider (Entrée)</button>
-      <button id="undo-btn" class="ghost" title="Annuler le dernier mouvement" disabled>Annuler (Ctrl+Z)</button>
-      <button id="skip-btn" class="ghost" title="Passer cette carte (−0,5)">Passer (S)</button>
+      <button id="validate-btn" class="success" disabled>Valider (Entrée)</button>
+      <button id="undo-btn" class="ghost" disabled>Annuler (Ctrl+Z)</button>
+      <button id="skip-btn" class="ghost">Passer (S)</button>
     </div>
 
-    <div id="explain" class="explain" aria-live="polite"></div>
+    <div id="explain" class="explain"></div>
   </div>
 
   <div id="end-screen" class="screen hidden">
     <h2>Résultat</h2>
     <p id="final-score"></p>
-
     <div class="actions">
       <button id="download-csv" class="primary">Télécharger le CSV</button>
       <button id="restart-btn" class="ghost">Rejouer</button>
     </div>
-
-    <details class="details">
-      <summary>Détails de la session</summary>
-      <pre id="session-details"></pre>
-    </details>
-
-    <div id="leaderboard" class="leaderboard hidden">
-      <h3>Classement (Top 10 – <span id="lb-class"></span>)</h3>
-      <table>
-        <thead><tr><th>#</th><th>Nom</th><th>Score /20</th><th>Date</th></tr></thead>
-        <tbody id="lb-body"></tbody>
-      </table>
-    </div>
   </div>
 
   <dialog id="help-dialog">
-    <h3>Aide & Raccourcis</h3>
-    <ul>
-      <li><b>Entrée</b> : Valider la carte</li>
-      <li><b>S</b> : Passer la carte</li>
-      <li><b>Ctrl+Z</b> : Annuler le dernier mouvement</li>
-      <li><b>Molette / Curseur Zoom</b> : Ajuster la taille de la grille</li>
-    </ul>
+    <h3>Aide</h3>
+    <p>Glisser-déposer chaque étiquette sur le plan. La vérification accepte une tolérance autour des zones cibles.</p>
     <button id="help-close" class="primary">OK</button>
   </dialog>
 
-  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  <div id="toast" class="toast hidden"></div>
 
-  <script src="game.js?v=4"></script>
+  <script src="game.js?v=5"></script>
 </body>
 </html>
