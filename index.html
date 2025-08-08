@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TEBAA – Plan de chantier (prototype)</title>
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <title>TEBAA – Plan de chantier (plan unique)</title>
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
   <header class="topbar">
@@ -14,8 +14,8 @@
   </header>
 
   <div id="start-screen" class="screen">
-    <h1>Mode “Plan de chantier”</h1>
-    <p class="subtitle">Place les éléments sur le plan réel (zones de drop tolérantes).</p>
+    <h1>Implantation sur plan (100 % plan)</h1>
+    <p class="subtitle">Glisse les étiquettes au bon endroit sur le plan. Tolérance activée.</p>
 
     <div class="grid-2">
       <div>
@@ -28,15 +28,6 @@
           <select id="player-class">
             <option value="2EMNB">2EMNB</option>
             <option value="1AA">1AA</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="exercise-type">Type d'exercice</label>
-          <select id="exercise-type">
-            <option value="vocab">Vocabulaire / Organisation</option>
-            <option value="phasage">Phasage</option>
-            <option value="metiers">Métiers</option>
-            <option value="all">Tous (mixés)</option>
           </select>
         </div>
       </div>
@@ -54,17 +45,17 @@
       <button id="start-btn" class="primary lg">Démarrer</button>
     </div>
 
-    <footer class="version">Version Plan v1 — août 2025</footer>
+    <footer class="version">Version Plan v2 — plan unique, 8 éléments</footer>
   </div>
 
   <div id="game-screen" class="screen hidden">
     <div id="hud">
       <div class="hud-item"><strong id="timer">⏱ 3:00</strong></div>
       <div class="hud-item"><strong id="score">Score : 0,0 / 20</strong></div>
-      <div class="hud-item"><strong id="progress">Carte 0/10</strong></div>
+      <div class="hud-item"><strong id="progress">Carte 0/1</strong></div>
       <div class="hud-item">
         <label for="zoom-range">Zoom</label>
-        <input id="zoom-range" type="range" min="60" max="140" value="100" />
+        <input id="zoom-range" type="range" min="60" max="160" value="100" />
       </div>
     </div>
 
@@ -73,7 +64,7 @@
 
     <div class="layout">
       <aside id="bank-side" class="side">
-        <div id="checklist" class="checklist hidden">
+        <div id="checklist" class="checklist">
           <h4>À placer</h4>
           <ul id="checklist-items"></ul>
           <button id="hint-btn" class="ghost sm" title="Zones indicatives (−0,2 pt)">Indice (−0,2)</button>
@@ -108,6 +99,6 @@
 
   <div id="toast" class="toast hidden"></div>
 
-  <script src="game.js?v=5"></script>
+  <script src="game.js?v=6"></script>
 </body>
 </html>

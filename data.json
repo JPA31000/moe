@@ -8,9 +8,9 @@
   },
   "levels": [
     {
-      "id": "P1",
+      "id": "PLAN1",
       "type": "vocab",
-      "prompt": "Place ces éléments d'organisation de chantier sur le plan réel.",
+      "prompt": "Place 8 éléments d'organisation de chantier sur le plan.",
       "plan_image": "plan.png",
       "targets": [
         {
@@ -36,6 +36,30 @@
           "x_pct": 55,
           "y_pct": 8,
           "tol_pct": 4
+        },
+        {
+          "label": "Accès camions",
+          "x_pct": 94,
+          "y_pct": 44,
+          "tol_pct": 5
+        },
+        {
+          "label": "Poste de secours",
+          "x_pct": 45,
+          "y_pct": 32,
+          "tol_pct": 4
+        },
+        {
+          "label": "Coffret électrique",
+          "x_pct": 66,
+          "y_pct": 32,
+          "tol_pct": 4
+        },
+        {
+          "label": "Stockage matériaux",
+          "x_pct": 78,
+          "y_pct": 72,
+          "tol_pct": 5
         }
       ],
       "explain": "Repères : Entrée côté gauche ; logistique en bas/droite ; éviter les conflits de flux."

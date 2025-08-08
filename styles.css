@@ -28,8 +28,7 @@ button.ghost{background:#0b1220;border-color:#1f2a3c;color:var(--text)} button:d
 .plan-inner img.plan{display:block; max-width:100%; height:auto; pointer-events:none; user-select:none}
 .drop-zone{position:absolute; width:28px; height:28px; border-radius:999px; border:2px dashed #60a5fa22; background:#60a5fa10; pointer-events:none}
 .drop-zone.guide{border-color:#60a5fa99; background:#60a5fa26}
-.drop-targeted{box-shadow:0 0 0 3px rgba(96,165,250,.4) inset}
-.tag-placed{position:absolute; transform:translate(-50%,-50%);}
+.tag-placed{position:absolute; transform:translate(-50%,-50%); white-space:nowrap;}
 
 .checklist h4{margin:0 0 8px 0} .checklist ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .checklist li.done{opacity:.6; text-decoration:line-through}
