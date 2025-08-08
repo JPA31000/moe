@@ -125,7 +125,7 @@
   function updateHUD(resetBar){
     els.timer.textContent = `⏱ ${Math.floor(timeLeft/60)}:${String(timeLeft%60).padStart(2,'0')}`;
     els.score.textContent = `Score : ${score.toFixed(1)} / 20`;
-    els.progress.textContent = `Carte ${Math.min(current+1), data ? data.settings.cards_per_game : 10}/${data ? data.settings.cards_per_game : 10}`;
+    const total = data ? data.settings.cards_per_game : 10; els.progress.textContent = `Carte ${Math.min(current+1, total)}/${total}`;
     const total = data ? data.settings.cards_per_game : 10;
     const pct = Math.min(100, Math.round(((current) / total) * 100));
     els.progressFill.style.width = pct + '%';
@@ -471,22 +471,29 @@
     }catch(e){ /* rien */ }
   }
 
-  // Écoutes globales
-  btnStart.addEventListener('click', () => loadData().then(startGame));
-  btnValidate.addEventListener('click', validate);
-  btnSkip.addEventListener('click', skip);
-  btnUndo.addEventListener('click', undo);
-  btnRestart.addEventListener('click', ()=>location.reload());
-  btnCSV.addEventListener('click', downloadCSV);
-  els.helpBtn.addEventListener('click', ()=> els.helpDlg.showModal());
-  els.helpClose.addEventListener('click', ()=> els.helpDlg.close());
+  
+document.addEventListener('DOMContentLoaded', () => {
+  try{
+    btnStart?.addEventListener('click', () => loadData().then(startGame).catch(startGame));
+    btnValidate?.addEventListener('click', validate);
+    btnSkip?.addEventListener('click', skip);
+    btnUndo?.addEventListener('click', undo);
+    btnRestart?.addEventListener('click', ()=>location.reload());
+    btnCSV?.addEventListener('click', downloadCSV);
+    els.helpBtn?.addEventListener('click', ()=> els.helpDlg.showModal());
+    els.helpClose?.addEventListener('click', ()=> els.helpDlg.close());
 
-  // Raccourcis clavier
-  window.addEventListener('keydown', (e)=>{
-    if(els.start && !els.start.classList.contains('hidden') && e.key==='Enter'){ e.preventDefault(); btnStart.click(); return; }
-    if(els.game.classList.contains('hidden')) return;
-    if(e.key==='Enter'){ e.preventDefault(); if(!btnValidate.disabled) validate(); }
-    if(e.key.toLowerCase()==='s'){ e.preventDefault(); skip(); }
-    if(e.ctrlKey && e.key.toLowerCase()==='z'){ e.preventDefault(); if(!btnUndo.disabled) undo(); }
-  });
-})();
+    window.addEventListener('keydown', (e)=>{
+      if(els.start && !els.start.classList.contains('hidden') && e.key==='Enter'){ e.preventDefault(); btnStart?.click(); return; }
+      if(els.game.classList.contains('hidden')) return;
+      if(e.key==='Enter'){ e.preventDefault(); if(!btnValidate.disabled) validate(); }
+      if(e.key.toLowerCase()==='s'){ e.preventDefault(); skip(); }
+      if(e.ctrlKey && e.key.toLowerCase()==='z'){ e.preventDefault(); if(!btnUndo.disabled) undo(); }
+    });
+  }catch(err){
+    console.error('Init error', err);
+    alert('Une erreur est survenue à l\'initialisation. Rafraîchissez la page.');
+  }
+});
+
+})();;

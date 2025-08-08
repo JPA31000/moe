@@ -76,3 +76,8 @@ button.lg{padding:14px 20px;font-size:18px}
 .leaderboard tr:nth-child(even){background:#0d1628}
 
 dialog{border:1px solid #1f2a3c;background:#0b1220;color:var(--text);border-radius:12px;padding:16px}
+
+#start-btn{pointer-events:auto}
+#start-screen{position:relative;z-index:1}
+
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#0a0f1d;border:1px solid #253552;color:#e5e7eb;padding:10px 14px;border-radius:10px;z-index:50}
