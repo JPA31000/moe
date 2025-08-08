@@ -26,6 +26,146 @@
   const optIcons = document.getElementById('opt-icons');
   const optLeader = document.getElementById('opt-leader');
 
+  // Fallback hors-ligne
+  const DEFAULT_DATA = {
+    "levels": [
+      {
+        "id": "L1",
+        "type": "phasage_mop",
+        "prompt": "Replace les phases de la loi MOP (maîtrise d'œuvre) dans l'ordre.",
+        "slots": ["ESQ", "APS", "APD", "PRO", "ACT", "VISA", "DET", "AOR"],
+        "distractors": ["DOE", "DIUO", "OPC"],
+        "explain": "Loi MOP (mission de base) : ESQ → APS → APD → PRO → ACT → VISA → DET → AOR."
+      },
+      {
+        "id": "L2",
+        "type": "phasage_chantier",
+        "prompt": "Replace les grandes étapes d'un chantier dans l'ordre.",
+        "slots": ["Installation de chantier", "Terrassement", "Fondations", "Élévation (gros œuvre)", "Charpente/Toiture", "Second œuvre", "Finitions", "Réception"],
+        "distractors": ["Études d'exécution", "DOE"],
+        "explain": "Du démarrage à la réception : installation → terrassement → fondations → gros œuvre → clos-couvert → second œuvre → finitions → réception."
+      },
+      {
+        "id": "L3",
+        "type": "metiers",
+        "prompt": "Associe chaque tâche de gros œuvre au bon métier.",
+        "pairs": [
+          {"tache": "Ferraillage des semelles", "metier": "Ferrailleur"},
+          {"tache": "Pose des banches", "metier": "Coffreur-bancheur"},
+          {"tache": "Conduite de la grue", "metier": "Grutier"},
+          {"tache": "Coulage de dalle", "metier": "Maçon"}
+        ],
+        "distractors": ["Électricien", "Plombier-chauffagiste", "Couvreur"],
+        "explain": "Ferrailleur (armatures), coffreur (coffrages/banches), grutier (levage), maçon (béton/dalles)."
+      },
+      {
+        "id": "L4",
+        "type": "metiers",
+        "prompt": "Associe chaque tâche de second œuvre au bon métier.",
+        "pairs": [
+          {"tache": "Tirage de câbles CFO/CFA", "metier": "Électricien"},
+          {"tache": "Pose des réseaux EU/EV", "metier": "Plombier-chauffagiste"},
+          {"tache": "Montage de cloisons", "metier": "Plaquiste"},
+          {"tache": "Étanchéité des toitures-terrasses", "metier": "Étancheur"}
+        ],
+        "distractors": ["Menuisier", "Peintre"],
+        "explain": "Électricien (alims/communication), plombier (sanitaire), plaquiste (cloisons/DTU), étancheur (membranes/complexes)."
+      },
+      {
+        "id": "L5",
+        "type": "vocab",
+        "prompt": "Place les étiquettes aux bons emplacements sur le plan (grille 10×6).",
+        "plan": "grille-10x6",
+        "targets": [
+          {"label": "Zone grue", "x": 2, "y": 1, "tolerance": 1},
+          {"label": "Stockage matériaux", "x": 7, "y": 4, "tolerance": 1},
+          {"label": "Circulation piétons", "x": 1, "y": 5, "tolerance": 1},
+          {"label": "Base vie", "x": 8, "y": 1, "tolerance": 1}
+        ],
+        "distractors": ["Benne à gravats", "Local déchets dangereux", "Zone EPI"],
+        "explain": "La grue se place dégagée, stockage en zone plane, circulations protégées, base vie à l'écart des flux."
+      },
+      {
+        "id": "L6",
+        "type": "vocab",
+        "prompt": "Place les éléments de signalisation et de sécurité.",
+        "plan": "grille 10×6",
+        "targets": [
+          {"label": "Accès camions", "x": 9, "y": 3, "tolerance": 1},
+          {"label": "Poste de secours", "x": 4, "y": 2, "tolerance": 1},
+          {"label": "Coffret électrique", "x": 6, "y": 2, "tolerance": 1},
+          {"label": "Benne à déchets", "x": 3, "y": 5, "tolerance": 1}
+        ],
+        "distractors": ["Zone soudure", "Aire de lavage roues"],
+        "explain": "Accès PL distincts, secours visible/accessible, coffret hors zone humide, déchets regroupés et balisés."
+      },
+      {
+        "id": "L7",
+        "type": "phasage_second_oeuvre",
+        "prompt": "Ordonne un enchaînement type du second œuvre (logique générale).",
+        "slots": ["Cloisons/Calepinage", "Réseaux (CFO/CFA/Plomberie)", "Menuiseries intérieures", "Revêtements sols/murs", "Peinture/Finitions"],
+        "distractors": ["Charpente", "Fondations"],
+        "explain": "On ferme/structure, on passe les réseaux, on pose menuiseries, puis revêtements et finitions."
+      },
+      {
+        "id": "L8",
+        "type": "metiers",
+        "prompt": "Associe travaux d'enveloppe et d'aménagement au métier.",
+        "pairs": [
+          {"tache": "Charpente bois traditionnelle", "metier": "Charpentier"},
+          {"tache": "Couverture tuiles", "metier": "Couvreur"},
+          {"tache": "Pose menuiseries extérieures", "metier": "Menuisier"},
+          {"tache": "Ragréage et sols souples", "metier": "Solier-moquettiste"}
+        ],
+        "distractors": ["Ferrailleur", "Plaquiste"],
+        "explain": "Charpentier (structure), couvreur (étanchéité/tuile), menuisier (ouvrants), solier (supports/revêtements)."
+      },
+      {
+        "id": "L9",
+        "type": "vocab",
+        "prompt": "Place ces éléments d'organisation de chantier.",
+        "plan": "grille 10×6",
+        "targets": [
+          {"label": "Zone de levage", "x": 3, "y": 1, "tolerance": 1},
+          {"label": "Panneau EPI obligatoires", "x": 0, "y": 3, "tolerance": 1},
+          {"label": "Zone déchets triés", "x": 8, "y": 5, "tolerance": 1},
+          {"label": "Poste de commandement/chef de chantier", "x": 5, "y": 0, "tolerance": 1}
+        ],
+        "distractors": ["Zone fumeurs", "Aire pique-nique"],
+        "explain": "Levage dégagé, EPI à l'entrée, tri en zone dédiée, point de commandement visible."
+      },
+      {
+        "id": "L10",
+        "type": "metiers",
+        "prompt": "Associe ces rôles/contrôles aux bons acteurs.",
+        "pairs": [
+          {"tache": "Coordination SPS", "metier": "Coordinateur SPS"},
+          {"tache": "OPC (ordonnancement, pilotage, coordination)", "metier": "OPC"},
+          {"tache": "Implantation et topographie", "metier": "Géomètre-topographe"},
+          {"tache": "Contrôle de conformité du béton", "metier": "Laboratoire (béton)"}
+        ],
+        "distractors": ["Chef de chantier", "Conducteur de travaux"],
+        "explain": "SPS (sécurité), OPC (planning/coordination), géomètre (implantations), labo (essais/contrôles)."
+      }
+    ],
+    "settings": {
+      "duration_seconds": 180,
+      "hints_enabled": false,
+      "hint_penalty": 0,
+      "skip_penalty": 0.5,
+      "cards_per_game": 10,
+      "classes": ["2EMNB", "1AA"],
+      "score": {
+        "points_per_correct": 1.0,
+        "points_per_error": -0.25,
+        "time_bonus_cap": 2.0,
+        "time_bonus_threshold": 0.5,
+        "time_bonus_per_card": 0.2,
+        "min_card_score": 0
+      }
+    }
+  };
+
   let data = null;
   let order = [];
   let current = 0;
@@ -36,14 +176,17 @@
   let results = [];
   let cardStartTime = 0;
 
-  // Charge data.json
-  fetch('data.json').then(r => r.json()).then(j => data = j);
+  function loadData(){
+    return fetch('data.json', {cache:'no-store'})
+      .then(r => { if(!r.ok) throw new Error('HTTP'); return r.json(); })
+      .then(j => { data = j; })
+      .catch(() => { data = DEFAULT_DATA; });
+  }
 
   // Utils
   const shuffle = (a) => { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
   const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
 
-  // Icônes SVG pour vocab
   const ICONS = {
     'Zone grue': '<svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M3 20h18v2H3zM5 20V8h4l3-3 3 3h4v12h-2V10h-3v10h-2V10h-3v10H7V10H5v10z"></path></svg>',
     'Stockage matériaux': '<svg viewBox="0 0 24 24" class="ico"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7zm9 2l7-3-7-3-7 3 7 3zm-7 2l7 3 7-3"/></svg>',
@@ -95,7 +238,7 @@
     els.progress.textContent = `Carte ${Math.min(current+1, data.settings.cards_per_game)}/${data.settings.cards_per_game}`;
   }
 
-  function clearArea(){ els.area.innerHTML=''; if(!optEval.checked) { els.explain.textContent=''; } }
+  function clearArea(){ els.area.innerHTML=''; if(!optEval.checked) { els.explain.textContent=''; } btnValidate.disabled = true; }
 
   // PHASAGE
   function renderPhasage(level){
@@ -118,6 +261,7 @@
       chip.tabIndex = 0;
       chip.dataset.type = 'phasage-item';
       chip.addEventListener('dragstart', onDragStart);
+      chip.addEventListener('dragend', onDragEnd);
       bank.appendChild(chip);
     });
 
@@ -135,6 +279,7 @@
 
   function onDragStart(e){ e.dataTransfer.setData('text/plain', e.target.textContent); e.dataTransfer.effectAllowed='move'; e.target.classList.add('dragging'); }
   function onDragOver(e){ e.preventDefault(); e.dataTransfer.dropEffect='move'; }
+  function onDragEnd(e){ e.target.classList.remove('dragging'); }
   function onDropIntoSlot(e, bank){ e.preventDefault(); const txt = e.dataTransfer.getData('text/plain');
     if(e.currentTarget.firstChild){ const old = e.currentTarget.firstChild; bank.appendChild(old); }
     const chip = [...document.querySelectorAll('.badge')].find(c=>c.textContent===txt && c.classList.contains('dragging')) || [...document.querySelectorAll('.badge')].find(c=>c.textContent===txt);
@@ -142,6 +287,7 @@
     chip.classList.remove('dragging');
     e.currentTarget.classList.add('filled');
     e.currentTarget.appendChild(chip);
+    btnValidate.disabled = false;
   }
 
   // METIERS
@@ -154,6 +300,7 @@
     shuffle(metiers).forEach(m => {
       const chip = document.createElement('div'); chip.className='badge'; chip.textContent=m; chip.draggable=true; chip.tabIndex=0; chip.dataset.type='metier';
       chip.addEventListener('dragstart', onDragStart);
+      chip.addEventListener('dragend', onDragEnd);
       bank.appendChild(chip);
     });
 
@@ -166,6 +313,7 @@
         const chip=[...document.querySelectorAll('.badge')].find(c=>c.textContent===txt && (c.dataset.type==='metier'));
         if(!chip) return;
         target.classList.add('filled'); target.appendChild(chip);
+        btnValidate.disabled = false;
       });
       row.appendChild(t); row.appendChild(target); list.appendChild(row);
     });
@@ -183,6 +331,7 @@
       const lbl = document.createElement('span'); lbl.textContent = t.label; lbl.className = icon ? 'sr-only' : '';
       tag.appendChild(lbl);
       tag.addEventListener('dragstart', onDragStart);
+      tag.addEventListener('dragend', onDragEnd);
       bank.appendChild(tag);
     });
 
@@ -196,7 +345,7 @@
           const existing = [...cell.childNodes].find(n=>n.classList && (n.classList.contains('tag')));
           if(existing){ bank.appendChild(existing); }
           const tag = [...document.querySelectorAll('.tag')].find(t=>t.textContent.trim()===txt || t.innerText.trim()===txt);
-          if(tag) cell.appendChild(tag);
+          if(tag) { cell.appendChild(tag); btnValidate.disabled = false; }
         });
         grid.appendChild(cell);
       }
@@ -221,14 +370,16 @@
 
   function validate(){
     const level = data.levels[ order[current] ];
-    let correct = 0, errors = 0, details = {};
+    let correct = 0, errors = 0;
 
     if(level.type.startsWith('phasage')){
       const placed = [...document.querySelectorAll('.phasage-slots .slot')].map(s=> s.firstChild ? s.firstChild.textContent : null);
       level.slots.forEach((expected, idx)=>{
-        if(placed[idx] === expected){ correct++; markSlot(idx, true); } else { errors++; markSlot(idx, false); }
+        const ok = placed[idx] === expected;
+        if(ok){ correct++; } else { errors++; }
+        const slot = document.querySelector(`.phasage-slots .slot:nth-child(${idx+1})`);
+        slot && slot.classList.add(ok ? 'correct' : 'incorrect');
       });
-      details = { placed };
     }
     else if(level.type === 'metiers'){
       const rows = [...document.querySelectorAll('.metiers-row')];
@@ -236,9 +387,10 @@
         const target = row.querySelector('.metier-target');
         const got = target.firstChild ? target.firstChild.textContent : null;
         const expected = target.dataset.answer;
-        if(got === expected){ correct++; target.classList.add('correct'); } else { errors++; target.classList.add('incorrect'); }
+        const ok = got === expected;
+        if(ok){ correct++; } else { errors++; }
+        target.classList.add(ok ? 'correct' : 'incorrect');
       });
-      details = { pairs: level.pairs.map(p=>({ tache:p.tache, attendu:p.metier })) };
     }
     else if(level.type === 'vocab'){
       const tags = [...document.querySelectorAll('.tag')];
@@ -254,23 +406,21 @@
           if(ok){ correct++; cell.classList.add('correct'); } else { errors++; cell.classList.add('incorrect'); }
         } else { errors++; }
       });
-      details = { placed: tags.map(tag=>({ label: tag.innerText.trim(), x: tag.parentElement?.dataset?.x ?? null, y: tag.parentElement?.dataset?.y ?? null })) };
     }
 
-    const perCorrect = data.settings.score.points_per_correct;
-    const perError = data.settings.score.points_per_error;
-    let gained = (correct * perCorrect) + (errors * perError);
-    if(gained < data.settings.score.min_card_score) gained = data.settings.score.min_card_score;
+    const s = data.settings.score;
+    let gained = (correct * s.points_per_correct) + (errors * s.points_per_error);
+    if(gained < s.min_card_score) gained = s.min_card_score;
 
     const elapsed = (Date.now() - cardStartTime) / 1000;
     const meanPerCard = data.settings.duration_seconds / data.settings.cards_per_game;
-    if((meanPerCard - elapsed) / meanPerCard > data.settings.score.time_bonus_threshold){
-      gained += data.settings.score.time_bonus_per_card;
+    if((meanPerCard - elapsed) / meanPerCard > s.time_bonus_threshold){
+      gained += s.time_bonus_per_card;
     }
 
     score = clamp(score + gained, 0, 20);
 
-    if(optEval.checked){ els.explain.textContent = level.explain || ''; }
+    if(optEval.checked){ els.explain.textContent = (data.levels[ order[current] ].explain || ''); }
 
     results.push({
       date: new Date().toLocaleString(),
@@ -287,12 +437,6 @@
     current++;
     setTimeout(nextCard, 700);
     updateHUD();
-  }
-
-  function markSlot(idx, ok){
-    const slot = document.querySelector(`.phasage-slots .slot:nth-child(${idx+1})`);
-    if(!slot) return;
-    slot.classList.add(ok ? 'correct' : 'incorrect');
   }
 
   function skip(){
@@ -320,11 +464,8 @@
 
     els.sessionDetails.textContent = JSON.stringify(results, null, 2);
 
-    autoDownloadCSV();
-
-    if(optLeader.checked){
-      renderLeaderboard();
-    }
+    downloadCSV();
+    if(optLeader.checked) renderLeaderboard();
   }
 
   function toCSV(rows){
@@ -347,8 +488,6 @@
     a.href = url; a.download = 'resultats_tebaa.csv'; a.click();
     setTimeout(()=>URL.revokeObjectURL(url), 1000);
   }
-
-  function autoDownloadCSV(){ downloadCSV(); }
 
   function saveScore(){
     try{
@@ -377,7 +516,7 @@
   }
 
   // Écoutes
-  btnStart.addEventListener('click', startGame);
+  btnStart.addEventListener('click', () => loadData().then(startGame));
   btnValidate.addEventListener('click', validate);
   btnSkip.addEventListener('click', skip);
   btnRestart.addEventListener('click', ()=>location.reload());

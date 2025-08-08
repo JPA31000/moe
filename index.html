@@ -28,7 +28,7 @@
       <div>
         <fieldset class="fieldset">
           <legend>Options</legend>
-          <label class="check"><input id="opt-eval" type="checkbox" checked> Mode évaluation (masque l'explication jusqu'à validation)</label>
+          <label class="check"><input id="opt-eval" type="checkbox" checked> Mode évaluation (explication affichée après validation)</label>
           <label class="check"><input id="opt-icons" type="checkbox" checked> Icônes SVG pour le vocabulaire</label>
           <label class="check"><input id="opt-leader" type="checkbox" checked> Classement local (Top 10 par classe)</label>
         </fieldset>
@@ -36,6 +36,7 @@
     </div>
 
     <button id="start-btn" class="primary">Démarrer la partie (3 min)</button>
+    <p class="hint">💡 En local sans serveur, si le navigateur bloque le chargement de data.json, le jeu passe en <em>mode hors‑ligne</em> (données intégrées).</p>
   </div>
 
   <div id="game-screen" class="screen hidden" aria-live="polite">
@@ -49,7 +50,7 @@
     <div id="game-area" class="game-area"></div>
 
     <div id="controls" class="controls">
-      <button id="validate-btn" class="success" title="Corriger la carte">Valider</button>
+      <button id="validate-btn" class="success" title="Corriger la carte" disabled>Valider</button>
       <button id="skip-btn" class="ghost" title="Passer cette carte (−0,5)">Passer (−0,5)</button>
     </div>
 

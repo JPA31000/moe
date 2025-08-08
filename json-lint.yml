@@ -1,0 +1,13 @@
+name: JSON Lint
+on:
+  push:
+    paths: ["data.json"]
+  pull_request:
+    paths: ["data.json"]
+jobs:
+  jq-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON
+        run: jq . data.json > /dev/null

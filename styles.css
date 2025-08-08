@@ -1,0 +1,62 @@
+:root{
+  --bg:#f3f4f6;--text:#0f172a;--accent:#2563eb;--ok:#16a34a;--card:#ffffff;--muted:#6b7280;--line:#e5e7eb;--warn:#ef4444;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial; background:var(--bg); color:var(--text)}
+.screen{max-width:1100px;margin:0 auto;padding:24px}
+.hidden{display:none}
+
+h1{margin:8px 0 4px 0}
+.subtitle{margin-top:0;color:var(--muted)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-row{display:flex;gap:12px;align-items:center;margin:12px 0}
+label{min-width:150px}
+input,select{padding:12px 14px;border:1px solid #d1d5db;border-radius:12px;background:#fff;font-size:16px}
+.fieldset{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.check{display:block;margin:8px 0}
+button{padding:12px 16px;border-radius:12px;border:1px solid transparent;cursor:pointer;font-size:16px}
+button.primary{background:var(--accent);color:#fff}
+button.success{background:var(--ok);color:#fff}
+button.ghost{background:#fff;border-color:var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:focus{outline:3px solid #c7d2fe;outline-offset:2px}
+.hint{color:var(--muted);margin-top:10px}
+
+#hud{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:center; background:#0f172a;color:#fff;padding:14px;border-radius:14px;margin-bottom:16px}
+#prompt.card{background:var(--card);padding:16px;border-radius:14px;border:1px solid var(--line);margin-bottom:12px;font-weight:600}
+.game-area{display:grid;gap:14px;min-height:360px}
+.controls{display:flex;gap:10px;margin-top:8px}
+.explain{margin-top:12px;color:var(--muted)}
+
+.phasage-wrapper{display:grid;grid-template-columns:1fr;gap:16px}
+.phasage-bank,.phasage-slots{display:flex;flex-wrap:wrap;gap:12px;background:#fff;border:2px dashed #cbd5e1;padding:14px;border-radius:14px;min-height:96px}
+.badge{padding:10px 12px;border:2px solid #cbd5e1;border-radius:999px;background:#fff;user-select:none;font-weight:600}
+.badge[draggable="true"]{cursor:grab}
+.slot{min-width:160px;min-height:48px;display:flex;align-items:center;justify-content:center;border:2px dashed #cbd5e1;border-radius:12px;background:#f9fafb}
+.slot.filled{border-style:solid;background:#eef2ff}
+
+.metiers-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.metiers-list,.metiers-bank{background:#fff;border:2px dashed #cbd5e1;padding:14px;border-radius:14px}
+.metiers-row{display:grid;grid-template-columns:1fr 220px;gap:12px;align-items:center;margin:8px 0}
+.metier-target{min-height:48px;border:2px dashed #cbd5e1;border-radius:12px;background:#f9fafb;display:flex;align-items:center;justify-content:center}
+.metier-target.filled{border-style:solid;background:#eef2ff}
+
+.plan-wrapper{display:grid;grid-template-columns:320px 1fr;gap:16px}
+.vocab-bank{background:#fff;border:2px dashed #cbd5e1;padding:14px;border-radius:14px}
+.grid{background:#fff;border:1px solid var(--line);border-radius:14px;display:grid}
+.grid-cell{border:1px solid #eef2f7;min-width:34px;min-height:34px;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#94a3b8}
+.tag{padding:8px 10px;border:2px solid #cbd5e1;border-radius:999px;background:#fff;user-select:none;display:inline-flex;gap:8px;align-items:center;font-weight:600}
+.tag .ico{width:18px;height:18px;display:inline-block}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.correct{background:#dcfce7!important;border-color:#16a34a!important}
+.incorrect{background:#fee2e2!important;border-color:#ef4444!important}
+
+.leaderboard{margin-top:18px}
+.leaderboard table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.leaderboard th,.leaderboard td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}
+.leaderboard tr:nth-child(even){background:#fafafa}
+
+#end-screen pre{background:#0b1220;color:#e5e7eb;padding:12px;border-radius:12px;overflow:auto}
+.details{margin-top:10px}
