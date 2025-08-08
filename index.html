@@ -7,8 +7,18 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <header class="topbar">
+    <div class="brand">TEBAA • Maître d'œuvre</div>
+    <div class="progressbar" aria-label="Progression">
+      <div id="progress-fill" class="progress"></div>
+    </div>
+    <div class="top-actions">
+      <button id="help-btn" class="ghost sm" title="Aide (Raccourcis)">? Aide</button>
+    </div>
+  </header>
+
   <div id="start-screen" class="screen">
-    <h1>Maître d'œuvre – TEBAA</h1>
+    <h1>Jeu d'apprentissage</h1>
     <p class="subtitle">Lecture de plan • Phasage • Métiers • Vocabulaire</p>
 
     <div class="grid-2">
@@ -28,30 +38,41 @@
       <div>
         <fieldset class="fieldset">
           <legend>Options</legend>
-          <label class="check"><input id="opt-eval" type="checkbox" checked> Mode évaluation (explication affichée après validation)</label>
+          <label class="check"><input id="opt-eval" type="checkbox" checked> Mode évaluation (explication après validation)</label>
           <label class="check"><input id="opt-icons" type="checkbox" checked> Icônes SVG pour le vocabulaire</label>
           <label class="check"><input id="opt-leader" type="checkbox" checked> Classement local (Top 10 par classe)</label>
         </fieldset>
       </div>
     </div>
 
-    <button id="start-btn" class="primary">Démarrer la partie (3 min)</button>
-    <p class="hint">💡 En local sans serveur, si le navigateur bloque le chargement de data.json, le jeu passe en <em>mode hors‑ligne</em> (données intégrées).</p>
+    <div class="actions">
+      <button id="start-btn" class="primary lg">Démarrer (⌨ Entrée)</button>
+    </div>
+    <p class="hint">💡 En local sans serveur, si le navigateur bloque <code>data.json</code>, le jeu passe en <em>mode hors-ligne</em> (données intégrées).</p>
   </div>
 
   <div id="game-screen" class="screen hidden" aria-live="polite">
     <div id="hud">
-      <div><strong id="timer">⏱ 3:00</strong></div>
-      <div><strong id="score">Score : 0,0 / 20</strong></div>
-      <div><strong id="progress">Carte 0/10</strong></div>
+      <div class="hud-item"><strong id="timer">⏱ 3:00</strong></div>
+      <div class="hud-item"><strong id="score">Score : 0,0 / 20</strong></div>
+      <div class="hud-item"><strong id="progress">Carte 0/10</strong></div>
+      <div class="hud-item">
+        <label for="zoom-range">Zoom</label>
+        <input id="zoom-range" type="range" min="80" max="140" value="100" />
+      </div>
     </div>
 
     <div id="prompt" class="card"></div>
-    <div id="game-area" class="game-area"></div>
+
+    <div class="layout">
+      <aside id="bank-side" class="side"></aside>
+      <main id="game-area" class="game-area"></main>
+    </div>
 
     <div id="controls" class="controls">
-      <button id="validate-btn" class="success" title="Corriger la carte" disabled>Valider</button>
-      <button id="skip-btn" class="ghost" title="Passer cette carte (−0,5)">Passer (−0,5)</button>
+      <button id="validate-btn" class="success" title="Corriger la carte" disabled>Valider (Entrée)</button>
+      <button id="undo-btn" class="ghost" title="Annuler le dernier mouvement" disabled>Annuler (Ctrl+Z)</button>
+      <button id="skip-btn" class="ghost" title="Passer cette carte (−0,5)">Passer (S)</button>
     </div>
 
     <div id="explain" class="explain" aria-live="polite"></div>
@@ -79,6 +100,17 @@
       </table>
     </div>
   </div>
+
+  <dialog id="help-dialog">
+    <h3>Aide & Raccourcis</h3>
+    <ul>
+      <li><b>Entrée</b> : Valider la carte</li>
+      <li><b>S</b> : Passer la carte</li>
+      <li><b>Ctrl+Z</b> : Annuler le dernier mouvement</li>
+      <li><b>Molette / Curseur Zoom</b> : Ajuster la taille de la grille</li>
+    </ul>
+    <button id="help-close" class="primary">OK</button>
+  </dialog>
 
   <script src="game.js"></script>
 </body>
