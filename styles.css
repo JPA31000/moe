@@ -81,3 +81,16 @@ dialog{border:1px solid #1f2a3c;background:#0b1220;color:var(--text);border-radi
 #start-screen{position:relative;z-index:1}
 
 #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#0a0f1d;border:1px solid #253552;color:#e5e7eb;padding:10px 14px;border-radius:10px;z-index:50}
+
+.version {
+  margin-top: 40px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card-type {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
