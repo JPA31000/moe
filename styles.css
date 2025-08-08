@@ -79,3 +79,26 @@ dialog{border:1px solid #1f2a3c;background:#0b1220;color:#e5e7eb;border-radius:1
 
 .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#0a0f1d;border:1px solid #253552;color:#e5e7eb;padding:10px 14px;border-radius:10px;z-index:50}
 .toast.hidden{display:none}
+
+
+.rule-banner{margin:8px 0 12px 0; padding:10px 12px; border-radius:12px; background:#0a0f1d; border:1px solid #1c2a44; color:#cfe2ff}
+.rule-banner::before{content:"ℹ️ Règle métier : "; font-weight:700; margin-right:6px; color:#93c5fd}
+
+.checklist h4{margin:0 0 8px 0}
+.checklist ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px}
+.checklist li{display:flex; align-items:center; gap:6px; font-size:.95rem; color:#cbd5e1}
+.checklist .done{opacity:.5; text-decoration:line-through}
+
+.tag{gap:10px}
+.tag .txt{font-weight:700}
+
+.grid-wrap{position:relative}
+.grid-entrance{position:absolute; left:-8px; top:6px; transform:rotate(-90deg); font-size:.8rem; color:#93a4c7}
+.grid-logistics{position:absolute; right:8px; bottom:8px; font-size:.8rem; color:#93a4c7}
+
+.grid.guided .grid-cell.guide{box-shadow: inset 0 0 0 2px rgba(96,165,250,.75); background: rgba(96,165,250,.06)}
+
+.grid.logistic-shade .grid-cell[data-x="7"], .grid.logistic-shade .grid-cell[data-x="8"], .grid.logistic-shade .grid-cell[data-x="9"],
+.grid.logistic-shade .grid-cell[data-y="4"], .grid.logistic-shade .grid-cell[data-y="5"]{
+  background: rgba(148,163,184,0.05);
+}

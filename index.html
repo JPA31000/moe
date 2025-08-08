@@ -58,7 +58,7 @@
       <button id="start-btn" class="primary lg">Démarrer (Entrée)</button>
     </div>
 
-    <footer class="version">Version 2.0 — août 2025</footer>
+    <footer class="version">Version 2.1 — août 2025 (graphisme)</footer>
     <p class="hint">💡 En local, si <code>data.json</code> est bloqué, le jeu passe automatiquement en <strong>mode hors-ligne</strong> (données intégrées).</p>
   </div>
 
@@ -74,9 +74,16 @@
     </div>
 
     <div id="prompt" class="card"></div>
+    <div id="rule-banner" class="rule-banner hidden" aria-live="polite"></div>
 
     <div class="layout">
-      <aside id="bank-side" class="side"></aside>
+      <aside id="bank-side" class="side">
+        <div id="checklist" class="checklist hidden">
+          <h4>À placer</h4>
+          <ul id="checklist-items"></ul>
+          <button id="hint-btn" class="ghost sm" title="Affiche brièvement des zones indicatives (−0,2 pt)">Indice (−0,2)</button>
+        </div>
+      </aside>
       <main id="game-area" class="game-area"></main>
     </div>
 
